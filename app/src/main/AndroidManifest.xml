@@ -6,7 +6,6 @@
     <application
         android:label="5G Toggle"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.Material3.DayNight.NoActionBar">
         <service

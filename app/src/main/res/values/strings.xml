@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">5G Tile</string>
+    <string name="app_name">5GTile</string>
+    <string name="tile_fiveg_label">5G Toggle</string>
 </resources>

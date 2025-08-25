@@ -1,4 +1,4 @@
-package com.example.fivegtile
+package bismay.exe.fivegtile
 
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService

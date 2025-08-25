@@ -10,11 +10,16 @@ android {
 
     defaultConfig {
         applicationId "bismay.exe.fivegtile"
-        minSdkVersion 26
-        targetSdkVersion 34
+        minSdk 26
+        targetSdk 34
         versionCode 1
         versionName "1.0"
     }
+
+    buildFeatures {
+        viewBinding true
+    }
+}
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17

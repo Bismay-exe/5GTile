@@ -14,7 +14,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      # ✅ Setup JDK 17 (needed for Gradle & Android)
+      # ✅ Setup JDK 17
       - name: Setup JDK
         uses: actions/setup-java@v3
         with:
@@ -25,11 +25,18 @@ jobs:
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      # ✅ Generate local.properties so Gradle finds SDK
+      # ✅ Create local.properties with SDK path
       - name: Create local.properties
         run: |
           echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
 
-      # ✅ Build debug APK
+      # ✅ Build Debug APK
       - name: Build Debug APK
         run: ./gradlew assembleDebug
+
+      # ✅ Upload APK as artifact
+      - name: Upload Debug APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: app-debug
+          path: app/build/outputs/apk/debug/app-debug.apk

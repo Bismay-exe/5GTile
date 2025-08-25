@@ -1,4 +1,4 @@
-package com.example.fivegtile
+package bismay.exe.fivegtile
 
 import java.io.BufferedReader
 import java.io.InputStreamReader

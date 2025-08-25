@@ -1,4 +1,4 @@
-package com.example.fivegtile
+package bismay.exe.fivegtile
 
 import android.content.Context
 import android.telephony.SubscriptionManager

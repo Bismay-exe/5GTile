@@ -1,0 +1,52 @@
+name: Build & Release Debug APK
+
+on:
+  push:
+    branches:
+      - main # change if your default branch is master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
+
+      - name: Get version number
+        id: version
+        run: |
+          # Get the latest tag or default to v1.0.0
+          latest=$(git tag --sort=-v:refname | head -n 1)
+          if [ -z "$latest" ]; then
+            echo "tag=v1.0.0" >> $GITHUB_OUTPUT
+          else
+            # Extract major.minor.patch and bump patch
+            base=${latest#v}
+            major=$(echo $base | cut -d. -f1)
+            minor=$(echo $base | cut -d. -f2)
+            patch=$(echo $base | cut -d. -f3)
+            new_patch=$((patch + 1))
+            echo "tag=v$major.$minor.$new_patch" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          name: Release ${{ steps.version.outputs.tag }}
+          files: app/build/outputs/apk/debug/app-debug.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -37,7 +37,8 @@ object TelephonyToggles {
     }
 
     private fun parseMask(out: String): Int? {
-        val regex = Regex("\b(\d{2,})\b")
+        // FIXED regex: escaped backslashes
+        val regex = Regex("\\b(\\d{2,})\\b")
         val ints = regex.findAll(out).map { it.value.toIntOrNull() }.filterNotNull().toList()
         return if (ints.isNotEmpty()) ints.last() else null
     }

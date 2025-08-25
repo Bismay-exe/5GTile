@@ -1,7 +1,5 @@
 # FivegTile
 
-[中文版](README_zh-rCN.md)
-
 Toggle 5G with a single tap in quick settings
 
 ![](media/1.png)

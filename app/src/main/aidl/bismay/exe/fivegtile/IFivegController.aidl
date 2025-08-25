@@ -1,4 +1,4 @@
-package moe.xzr.fivegtile;
+package bismay.exe.fivegtile;
 
 interface IFivegController {
     boolean compatibilityCheck(int subId);

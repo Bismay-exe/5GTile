@@ -4,10 +4,12 @@ plugins {
 }
 
 android {
+    namespace "bismay.exe.fivegtile"
+    
     compileSdkVersion 34
 
     defaultConfig {
-        applicationId "com.example.fivegtile"
+        applicationId "bismay.exe.fivegtile"
         minSdkVersion 26
         targetSdkVersion 34
         versionCode 1

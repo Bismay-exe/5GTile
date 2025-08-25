@@ -1,52 +1,74 @@
 package bismay.exe.fivegtile
 
+import android.content.ComponentName
+import android.content.Intent
+import android.content.ServiceConnection
+import android.os.IBinder
 import android.service.quicksettings.Tile
 import android.service.quicksettings.TileService
-import android.telephony.TelephonyManager
-import android.os.Handler
-import android.os.Looper
-import android.util.Log
+import android.telephony.SubscriptionManager
+import com.topjohnwu.superuser.ipc.RootService
 
-class FiveGTileService : TileService() {
+class FivegTileService : TileService() {
+    private var fivegController: IFivegController? = null
 
-    private val mainHandler = Handler(Looper.getMainLooper())
-    private lateinit var telephonyManager: TelephonyManager
+    private fun runWithFivegController(what: (IFivegController?) -> Unit) {
+        if (!Utils.isRootGranted()) {
+            what(null)
+            return
+        }
+        if (fivegController != null) {
+            what(fivegController)
+        } else {
+            RootService.bind(
+                Intent(this@FivegTileService, FivegControllerService::class.java),
+                object : ServiceConnection {
+                    override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
+                        fivegController = IFivegController.Stub.asInterface(service)
+                        what(fivegController)
+                    }
+
+                    override fun onServiceDisconnected(name: ComponentName?) {
+
+                    }
+                })
+        }
+    }
+
+    private fun refreshState() = runWithFivegController {
+        if (it == null) {
+            qsTile.state = Tile.STATE_UNAVAILABLE
+            qsTile.updateTile()
+            return@runWithFivegController
+        }
+        val subId = SubscriptionManager.getDefaultDataSubscriptionId()
+        qsTile.state = if (!it.compatibilityCheck(subId)) {
+            Tile.STATE_UNAVAILABLE
+        } else {
+            if (it.getFivegEnabled(subId))
+                Tile.STATE_ACTIVE
+            else
+                Tile.STATE_INACTIVE
+        }
+        qsTile.updateTile()
+    }
+
 
     override fun onStartListening() {
         super.onStartListening()
-        telephonyManager = getSystemService(TelephonyManager::class.java)
-
-        updateTile()
+        refreshState()
     }
 
     override fun onClick() {
         super.onClick()
-        Log.d("FiveGTileService", "Tile clicked")
-
-        val subId = TelephonyToggles.getActiveDataSubId(this)
-        if (subId == -1) {
-            Log.e("FiveGTileService", "No active subscription found")
-            return
-        }
-
-        // Toggle 5G using TelephonyToggles
-        val success = TelephonyToggles.toggleNr(subId)
-        Log.d("FiveGTileService", "Toggle result: $success")
-
-        updateTile()
-    }
-
-    private fun updateTile() {
-        val subId = TelephonyToggles.getActiveDataSubId(this)
-        val isNrAllowed = if (subId != -1) TelephonyToggles.isNrAllowed(subId) else false
-
-        mainHandler.post {
-            qsTile.state = if (isNrAllowed) {
-                Tile.STATE_ACTIVE
-            } else {
-                Tile.STATE_INACTIVE
+        runWithFivegController {
+            val subId = SubscriptionManager.getDefaultDataSubscriptionId()
+            if (qsTile.state == Tile.STATE_INACTIVE) {
+                it?.setFivegEnabled(subId, true)
+            } else if (qsTile.state == Tile.STATE_ACTIVE) {
+                it?.setFivegEnabled(subId, false)
             }
-            qsTile.updateTile()
+            refreshState()
         }
     }
 }

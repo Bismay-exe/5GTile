@@ -1,4 +1,0 @@
-com.example.fivegtile.test.app-androidTest-0 C:\Users\bisma\Downloads\GitHub_Projects\FiveGTileApp\app\build\generated\res\resValues\androidTest\debug
-com.example.fivegtile.test.app-mergeDebugAndroidTestResources-1 C:\Users\bisma\Downloads\GitHub_Projects\FiveGTileApp\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
-com.example.fivegtile.test.app-mergeDebugAndroidTestResources-2 C:\Users\bisma\Downloads\GitHub_Projects\FiveGTileApp\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
-com.example.fivegtile.test.app-debugAndroidTest-3 C:\Users\bisma\Downloads\GitHub_Projects\FiveGTileApp\app\build\intermediates\merged_res\debugAndroidTest\mergeDebugAndroidTestResources

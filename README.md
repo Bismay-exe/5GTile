@@ -1,34 +1,24 @@
-# 📱 5G Quick Settings Tile (Rooted)
+# FivegTile
 
-A simple Android app that adds a **5G toggle tile** to Quick Settings.  
-Requires **root access** (Magisk / SuperSU) to change network mode.
+[中文版](README_zh-rCN.md)
 
----
+Toggle 5G with a single tap in quick settings
 
-## ✨ Features
-- 📴 Toggle **5G on/off** directly from Quick Settings  
-- 🔐 Root-only (safe from accidental toggles)  
-- ⚡ Lightweight — no background services  
-- 🎛️ Long-press (optional) → open full Network settings  
+![](media/1.png)
 
----
+## Compatibility
 
-## 📦 Install
+- Android 11+
+- **Root permission is needed**.
 
-👉 [Download the latest APK](https://github.com/YOUR_USERNAME/YOUR_REPO/releases/latest)  
-(or build it yourself — see below).
+## Why
 
-1. Install APK on rooted device (`adb install app-debug.apk` or tap to install).  
-2. Open Quick Settings edit panel → drag **5G** tile into active area.  
-3. Tap → grant root permission when Magisk/SuperSU prompts.  
-4. Done ✅  
+Well, this should have been done by OEMs and some of them actually had this feature a few years ago. But unfortunately, they all get removed due to carrier policy. It's time to implement it on our own.
 
----
+## Download
 
-## 🛠 Build (Locally with Android Studio)
+- [Releases](https://github.com/libxzr/FivegTile/releases)
 
-1. **Clone repo**
-   bash
-   git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
-   cd YOUR_REPO
-   ```
+## License
+
+- [MIT](LICENSE)
